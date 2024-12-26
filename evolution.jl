@@ -24,7 +24,9 @@ end
 
 function evaluate(chainset::AbstractMatrix, struct_list::AbstractMatrix, nbest::Int)
     merits = zeros(Float64, size(chainset,1))
+    println("Total "*string(size(chainset,1))*" chains")
     for i in 1:size(chainset,1)
+        println("Training "*string(i)*" chain")
         chain = chainset[i,:]
         merits[i] = fitness(chain, struct_list, x_train, x_test, y_train, y_test)
     end
@@ -73,7 +75,7 @@ end
 
 function main()
     Random.seed!(42)
-    graphs = matread("graphs8.mat")
+    graphs = matread("graphs.mat")
     struct_list = graphs["struct_list"]
     dirG = graphs["dirG"]
 
@@ -92,7 +94,8 @@ function main()
     chainset, merits = evaluate(chainset, struct_list, nbest)
     push!(merits_history, copy(merits))
     println(chainset)
-    for _ in 1:num_generation
+    for gen in 1:num_generation
+        println("Running "*string(gen)*" generation")
         chainset, merits = evolve_set(chainset, 
                               num_split, nbest, depth_evolve,
                               struct_list, dirG)

@@ -74,6 +74,8 @@ function build_dirGraph(n::Int, reflist::AbstractMatrix)
             end
         end
     end
+    # forbidden 1 node (the all empty node)
+    G[:,1] = zeros(n)
     return G
 end
 
@@ -84,7 +86,7 @@ function main()
     num_nodes = size(struct_list, 1)
     dirG = build_dirGraph(num_nodes, struct_list)
 
-    outfile_name = "graphs8.mat" 
+    outfile_name = "graphs.mat" 
     matwrite(outfile_name, Dict("struct_list" => struct_list,
                                 "dirG" => dirG))
 end
