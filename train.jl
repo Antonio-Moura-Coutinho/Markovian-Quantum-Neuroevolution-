@@ -122,5 +122,5 @@ function fitness(encode_number::AbstractVector, struct_list::AbstractMatrix, x_t
         dispatch!(circuit, updates) 
     end
 
-    return maximum(acc_test_history)
+    return maximum(acc_test_history), loss_train_history, acc_train_history, loss_test_history, acc_test_history
 end
